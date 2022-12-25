@@ -10,7 +10,15 @@ var speed_html = document.getElementById("speed");
 var temp_min_html = document.getElementById("temp_min");
 var temp_max_html = document.getElementById("temp_max");
 var degree_html = document.getElementById("degree");
-var main_desc;
+
+var thunderstorm = "fi-rr-thunderstorm";
+var drizzle = "fi-rr-cloud-drizzle";
+var raindrops = "fi-rr-raindrops";
+var atmosphere = "fi-rr-smog";
+var snow = "fi-rr-snow-blowing";
+var clear = "fi-rr-cloud-sun";
+var clouds = "fi-rr-smoke";
+var icon_class;
 
 var obj = "";
 var city_search = document.getElementById("search");
@@ -85,6 +93,25 @@ function fetchWeather() {
             "bg"
           ).style.backgroundImage = `url('${image_url}')`;
         });
+
+      //Adding Icons
+      if (main_desc == "Rain") {
+        icon_class = raindrops;
+      } else if (main_desc == "Clouds") {
+        icon_class = clouds;
+      } else if (main_desc == "Snow") {
+        icon_class = snow;
+      } else if (main_desc == "Drizzle") {
+        icon_class = clouds;
+      } else if (main_desc == "Thunderstorm") {
+        icon_class = thunderstorm;
+      } else if (main_desc == "Clear") {
+        icon_class = clear;
+      } else {
+        icon_class = atmosphere;
+      }
+      document.getElementById("weather_icon").className = "fi";
+      document.getElementById("weather_icon").classList.add(icon_class);
     })
     .catch((errorResponse) => {
       if (errorResponse.text) {
@@ -97,6 +124,8 @@ function fetchWeather() {
       }
     });
 }
+
+fetchWeather();
 
 // preventing the submit from loading
 var form = document.getElementById("mySearchForm");
@@ -112,15 +141,12 @@ setInterval(function () {
   element.innerHTML = d.toLocaleTimeString();
 }, 1000);
 
+var searchClicked = "false";
+
 //event handling of submit
-document
-  .getElementById("mySearchForm")
-  .addEventListener("submit", function (e) {
-    if (!(city_search.value == "")) {
-      fetchWeather();
-    }
-  });
-
-// document.getElementById("mySearchForm").addEventListener("submit", clicked);
-
-//weather Api
+document.getElementById("mySearchForm").addEventListener("submit", () => {
+  city_search.value = city_search.value;
+  fetchWeather();
+  // document.body.style.animation = "fadeIn 1s";
+  // setTimeout(() => (document.body.style.animation = ""), 1000);
+});

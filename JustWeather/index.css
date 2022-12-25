@@ -71,14 +71,18 @@
     background-color: transparent;
     color: rgba(210, 210, 210, 0.575);
     border: none;
+    
   }
   .submit:hover,
   .submit:focus {
     color: rgba(255, 255, 255, 0.904);
   }
-  .names,
+  
   .results {
-    color: rgba(210, 210, 210, 0.7);
+    color: rgba(238, 238, 238, 0.921);
+  }
+  .names{
+    color: rgb(184, 184, 184);
   }
   svg {
     width: 60px;
@@ -114,4 +118,7 @@
     .box2{
       height: 100%;
     }
+  }
+  #weather_icon{
+    font-size: 35px;
   }
