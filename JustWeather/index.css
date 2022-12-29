@@ -31,6 +31,7 @@
   .box2 {
     background-color: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(20px);
+    position: relative;
   }
 
   .temp {
@@ -48,6 +49,7 @@
     color: rgba(210, 210, 210, 0.575);
     font-size: 1.1rem;
     width: 90%;
+    
   }
   .modal-content {
     background-color: rgba(0, 0, 0, 0.7);
@@ -116,9 +118,32 @@
       height: 50px;
     }
     .box2{
-      height: 100%;
+      justify-content: space-around;
     }
   }
   #weather_icon{
     font-size: 35px;
+  }
+  #datalist{
+    background-color: rgb(20, 20, 20);
+    position: absolute;
+    width: 85%;
+    top:55px;
+    z-index: 1;
+    color: rgb(184, 184, 184);
+    display: none;
+    font-size: 1.1rem;
+  }
+  #datalist li{
+    list-style: none;
+    margin-bottom: 1px;
+    padding-left: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(27, 27, 27);
+    height: 40px;
+    padding-top:5px ;
+    
+  }
+  #datalist li:hover{
+    background-color:rgb(39, 39, 39); ;
   }

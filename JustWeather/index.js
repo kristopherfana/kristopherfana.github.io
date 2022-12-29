@@ -67,17 +67,17 @@ function fetchWeather() {
       speed = wind.speed;
 
       //html declaration
-      feels_like_html.innerHTML = feels_like + "C";
-      temp_min_html.innerHTML = temp_min + "C";
-      temp_max_html.innerHTML = temp_max + "C";
+      feels_like_html.innerHTML = feels_like + "&#8451";
+      temp_min_html.innerHTML = temp_min + "&#8451";
+      temp_max_html.innerHTML = temp_max + "&#8451";
       humidity_html.innerHTML = humidity + "%";
       speed_html.innerHTML = speed + "m/s";
       pressure_html.innerHTML = pressure + "hPa";
       visibility_html.innerHTML = visibility + "m";
-      degree_html.innerHTML = degree;
+      degree_html.innerHTML = degree + "&#176;";
       city_name_html.innerHTML = city_name;
       country_html.innerHTML = country;
-      temp_html.innerHTML = Math.round(temp) + "C";
+      temp_html.innerHTML = Math.round(temp) + "&#8451";
 
       //unsplash fetch api
       fetch(
@@ -150,3 +150,35 @@ document.getElementById("mySearchForm").addEventListener("submit", () => {
   // document.body.style.animation = "fadeIn 1s";
   // setTimeout(() => (document.body.style.animation = ""), 1000);
 });
+
+let suggestion = [
+  "Hello",
+  "Hie",
+  "Morning",
+  "Afternoon",
+  "Evening",
+  "utopia",
+  "Underneath",
+  "Comprehensive",
+  "Valuable",
+  "30",
+  "40",
+];
+
+city_search.onkeyup = (e) => {
+  let userInput = e.target.value;
+  newArray = [];
+  if (userInput) {
+    newArray = suggestion.filter((data) => {
+      return data.toLowerCase().startsWith(userInput.toLowerCase());
+    });
+    newArray = newArray.map((data) => {
+      return "<li>" + data + "</li>";
+    });
+    console.log(suggestion.join(" "));
+    document.getElementById("datalist").style.display = "block";
+  } else {
+    document.getElementById("datalist").style.display = "none";
+  }
+  console.log(city_search === document.activeElement);
+};
