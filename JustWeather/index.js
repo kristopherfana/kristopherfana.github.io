@@ -76,7 +76,7 @@ function fetchWeather() {
       visibility_html.innerHTML = visibility + "m";
       degree_html.innerHTML = degree + "&#176;";
       city_name_html.innerHTML = city_name;
-      country_html.innerHTML = country;
+      // country_html.innerHTML = country;
       temp_html.innerHTML = Math.round(temp) + "&#8451";
 
       //unsplash fetch api
@@ -151,34 +151,65 @@ document.getElementById("mySearchForm").addEventListener("submit", () => {
   // setTimeout(() => (document.body.style.animation = ""), 1000);
 });
 
-let suggestion = [
-  "Hello",
-  "Hie",
-  "Morning",
-  "Afternoon",
-  "Evening",
-  "utopia",
-  "Underneath",
-  "Comprehensive",
-  "Valuable",
-  "30",
-  "40",
-];
-
 city_search.onkeyup = (e) => {
   let userInput = e.target.value;
   newArray = [];
   if (userInput) {
-    newArray = suggestion.filter((data) => {
-      return data.toLowerCase().startsWith(userInput.toLowerCase());
-    });
-    newArray = newArray.map((data) => {
-      return "<li>" + data + "</li>";
-    });
-    console.log(suggestion.join(" "));
-    document.getElementById("datalist").style.display = "block";
+    fetch("https://countriesnow.space/api/v0.1/countries")
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.data);
+
+        for (let index = 0; index < 229; index++) {
+          cities = result.data[index].cities;
+          countrycode = result.data[index].iso2;
+          cities = cities.filter((data) => {
+            return data.toLowerCase().startsWith(userInput.toLowerCase());
+          });
+          cities = cities.map((data) => {
+            return data + ", " + countrycode;
+          });
+          newArray = newArray.concat(cities);
+        }
+        newArray = newArray.map((data) => {
+          return "<li>" + data + "</li>";
+        });
+        document.getElementById("datalist").style.display = "block";
+        country = result.data[index].country;
+        showSuggestions(newArray);
+        let allListData = document.querySelectorAll("li");
+        console.log(allListData);
+        for (let index = 0; index < allListData.length; index++) {
+          allListData[index].setAttribute("onclick", "select(this)");
+          newArray = [];
+        }
+
+        // country_html.innerHTML = country;
+      });
   } else {
-    document.getElementById("datalist").style.display = "none";
   }
-  console.log(city_search === document.activeElement);
 };
+function showSuggestions(list) {
+  let listOfData;
+  if (!list.length) {
+    listOfData = "<li>No City Found</li>";
+  } else {
+    listOfData = list.join("");
+  }
+  document.getElementById("datalist").innerHTML = listOfData;
+}
+
+function select(element) {
+  selectedCity = element.textContent;
+  city_search.value = selectedCity;
+  fetchWeather();
+  document.getElementById("datalist").style.display = "none";
+  city_search.value = "";
+  country_html.innerHTML = country;
+}
+function hideDataList() {
+  return (document.getElementById("datalist").style.display = "none");
+}
+if (city_search.onblur && document.getElementById("datalist").onblur) {
+  hideDataList;
+}
