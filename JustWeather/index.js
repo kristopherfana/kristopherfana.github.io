@@ -25,7 +25,7 @@ var city_search = document.getElementById("search");
 city_search.value = "London";
 
 function fetchWeather() {
-  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city_search.value}&units=metric&appid=ca8c6ec76045f8382dcf193fd7b48718`;
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city_search.value}&units=metric&appid=ca8c6ec76045f8382dcf193fd7b48718`;
   fetch(url, {})
     .then((response) => {
       if (!response.ok) {
@@ -76,7 +76,7 @@ function fetchWeather() {
       visibility_html.innerHTML = visibility + "m";
       degree_html.innerHTML = degree + "&#176;";
       city_name_html.innerHTML = city_name;
-      // country_html.innerHTML = country;
+      country_html.innerHTML = country;
       temp_html.innerHTML = Math.round(temp) + "&#8451";
 
       //unsplash fetch api
@@ -175,7 +175,7 @@ city_search.onkeyup = (e) => {
           return "<li>" + data + "</li>";
         });
         document.getElementById("datalist").style.display = "block";
-        country = result.data[index].country;
+        // country = result.data[index].country;
         showSuggestions(newArray);
         let allListData = document.querySelectorAll("li");
         console.log(allListData);
@@ -186,6 +186,7 @@ city_search.onkeyup = (e) => {
 
         // country_html.innerHTML = country;
       });
+    console.log(city_search.onblur);
   } else {
   }
 };
@@ -205,11 +206,13 @@ function select(element) {
   fetchWeather();
   document.getElementById("datalist").style.display = "none";
   city_search.value = "";
-  country_html.innerHTML = country;
+  // country_html.innerHTML = country;
 }
 function hideDataList() {
   return (document.getElementById("datalist").style.display = "none");
 }
 if (city_search.onblur && document.getElementById("datalist").onblur) {
+  alert("Okey");
   hideDataList;
 }
+console.log(city_search.onblur);
